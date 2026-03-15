@@ -1,0 +1,20 @@
+package templates
+
+templ Layout() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>AI Chat</title>
+			<link rel="stylesheet" href="/static/css/styles.css"/>
+			<link rel="stylesheet" href="/static/css/hljs-theme.css"/>
+			<script src="/static/js/vendor/htmx.min.js"></script>
+			<script src="/static/js/vendor/htmx-sse.js"></script>
+		</head>
+		<body>
+			{ children... }
+			<script src="/static/js/dist/app.js"></script>
+		</body>
+	</html>
+}

@@ -1,0 +1,67 @@
+package templates
+
+import (
+	"github.com/gr8cally/ai-chatbot/internal/session"
+)
+
+templ MessageBubble(msg session.Message) {
+	<div class={ "message", templ.KV("message-user", msg.Role == session.RoleUser), templ.KV("message-assistant", msg.Role == session.RoleAssistant) }>
+		<div class="message-content">
+			if msg.Role == session.RoleAssistant {
+				<div class="markdown-body" data-raw-content={ msg.Content }>
+					{ msg.Content }
+				</div>
+			} else {
+				<p>{ msg.Content }</p>
+			}
+		</div>
+		<div class="message-meta">
+			<span class="message-time" data-timestamp={ msg.Timestamp.Format("2006-01-02T15:04:05Z07:00") }>
+				{ msg.Timestamp.Format("3:04 PM") }
+			</span>
+		</div>
+	</div>
+}
+
+templ MessagePair(user session.Message, assistant session.Message) {
+	@MessageBubble(user)
+	@MessageBubble(assistant)
+}
+
+templ StreamStart(user session.Message, streamID string) {
+	@MessageBubble(user)
+	<div class="message message-assistant">
+		<div class="message-content">
+			<div
+				id="stream-target"
+				class="markdown-body streaming"
+				data-stream-id={ streamID }
+				data-sse-url={ "/chat/stream?stream_id=" + streamID }
+			>
+				<span class="cursor"></span>
+			</div>
+		</div>
+	</div>
+}
+
+templ ErrorBubble(errMsg string) {
+	<div class="message message-error">
+		<div class="message-content">
+			<div class="error-content">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="15" y1="9" x2="9" y2="15"></line>
+					<line x1="9" y1="9" x2="15" y2="15"></line>
+				</svg>
+				<span>{ errMsg }</span>
+			</div>
+			<button
+				class="btn btn-retry"
+				onclick="retryLastMessage(this)"
+				aria-label="Retry sending message"
+			>
+				Retry
+			</button>
+		</div>
+	</div>
+}

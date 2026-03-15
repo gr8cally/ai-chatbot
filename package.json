@@ -1,0 +1,16 @@
+{
+  "name": "ai-chatbot-ts",
+  "private": true,
+  "scripts": {
+    "build": "esbuild ts/main.ts --bundle --outfile=static/js/dist/app.js --format=iife --minify",
+    "watch": "esbuild ts/main.ts --bundle --outfile=static/js/dist/app.js --format=iife --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0"
+  },
+  "dependencies": {
+    "dompurify": "^3.0.0",
+    "highlight.js": "^11.9.0",
+    "marked": "^12.0.0"
+  }
+}

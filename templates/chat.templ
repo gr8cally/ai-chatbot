@@ -1,0 +1,105 @@
+package templates
+
+import (
+	"github.com/gr8cally/ai-chatbot/internal/session"
+)
+
+templ ChatPage(messages []session.Message) {
+	@Layout() {
+		<a href="#message-input" class="skip-link">Skip to chat input</a>
+		<div class="chat-container" role="main">
+			<header class="chat-header">
+				<h1>AI Chat</h1>
+				<button
+					class="btn btn-clear"
+					hx-post="/chat/clear"
+					hx-target="#chat-messages"
+					hx-swap="innerHTML"
+					aria-label="Clear chat history"
+				>
+					Clear Chat
+				</button>
+			</header>
+			<div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+				if len(messages) == 0 {
+					@WelcomeScreen()
+				} else {
+					for _, msg := range messages {
+						@MessageBubble(msg)
+					}
+				}
+			</div>
+			<div class="chat-input-area">
+				<div id="abort-container" class="abort-container hidden">
+					<button
+						id="abort-btn"
+						class="btn btn-abort"
+						hx-post="/chat/abort"
+						aria-label="Stop generating response"
+					>
+						Stop generating
+					</button>
+				</div>
+				<form
+					id="chat-form"
+					hx-post="/chat/stream/start"
+					hx-target="#chat-messages"
+					hx-swap="beforeend"
+					hx-on::after-request="this.reset()"
+					hx-disabled-elt="#send-btn"
+					autocomplete="off"
+				>
+					<div class="input-row">
+						<div class="input-wrapper">
+							<textarea
+								id="message-input"
+								name="message"
+								placeholder="Type a message..."
+								rows="1"
+								required
+								maxlength="4000"
+								aria-label="Chat message input"
+							></textarea>
+							<span id="char-counter" class="char-counter hidden" aria-live="polite"></span>
+						</div>
+						<button type="submit" id="send-btn" class="btn btn-send" aria-label="Send message">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="22" y1="2" x2="11" y2="13"></line>
+								<polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+							</svg>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	}
+}
+
+templ WelcomeScreen() {
+	<div id="welcome-screen" class="welcome-screen">
+		<div class="welcome-content">
+			<div class="welcome-icon">
+				<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+				</svg>
+			</div>
+			<h2>Welcome to AI Chat</h2>
+			<p>Ask me anything. I can help with explanations, code, and more.</p>
+			<div class="suggested-prompts">
+				<button class="btn btn-suggestion" data-prompt="What is the attention mechanism in transformers?">
+					What is attention?
+				</button>
+				<button class="btn btn-suggestion" data-prompt="Explain the difference between TCP and UDP">
+					TCP vs UDP
+				</button>
+				<button class="btn btn-suggestion" data-prompt="Write a Python function to find the nth Fibonacci number">
+					Fibonacci in Python
+				</button>
+			</div>
+		</div>
+	</div>
+}
+
+templ EmptyChat() {
+	@WelcomeScreen()
+}

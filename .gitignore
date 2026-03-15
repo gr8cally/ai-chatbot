@@ -1,0 +1,6 @@
+.env
+bin/
+tmp/
+node_modules/
+static/js/dist/
+*_templ.go
