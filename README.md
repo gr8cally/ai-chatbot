@@ -74,4 +74,4 @@ make dev
 
 ---
 
-For technical specifications, see [spec.md](./spec.md). For the detailed implementation plan, see [implementation.md](./implementation.md).
+
