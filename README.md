@@ -1,6 +1,6 @@
 # AI Chatbot — Go, Templ, HTMX, and SSE
 
-A production-quality AI chatbot interface that connects to a LangChain Agent backend. This application demonstrates a modern AI UX with streaming tokens, markdown rendering, syntax highlighting, and graceful error handling.
+An AI chatbot interface that connects to a LangChain Agent backend. This application demonstrates a modern AI UX with streaming tokens, markdown rendering, syntax highlighting, and graceful error handling.
 
 ## 🚀 How to Run
 
@@ -15,7 +15,7 @@ A production-quality AI chatbot interface that connects to a LangChain Agent bac
 1.  **Clone the repository and set up environment variables**:
     ```bash
     cp .env-example .env
-    # Edit .env and set your AGENT_URL (e.g., https://ai4d.wiremockapi.cloud)
+    # Edit .env and set your NEXT_PUBLIC_AGENT_URL (e.g., https://ai4d.wiremockapi.cloud)
     ```
 
 2.  **Build and Run**:
@@ -68,7 +68,7 @@ make dev
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `AGENT_URL` | Yes | — | Base URL of the LangChain agent API |
+| `NEXT_PUBLIC_AGENT_URL` | Yes | — | Base URL of the LangChain agent API |
 | `PORT` | No | `8080` | HTTP server listen port |
 | `SESSION_SECRET` | No | random | Secret for signing session cookies |
 

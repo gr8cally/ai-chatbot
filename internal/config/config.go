@@ -18,9 +18,9 @@ type Config struct {
 func Load() *Config {
 	_ = godotenv.Load()
 
-	agentURL := os.Getenv("AGENT_URL")
+	agentURL := os.Getenv("NEXT_PUBLIC_AGENT_URL")
 	if agentURL == "" {
-		log.Fatal("AGENT_URL environment variable is required")
+		log.Fatal("NEXT_PUBLIC_AGENT_URL environment variable is required")
 	}
 
 	port := os.Getenv("PORT")
